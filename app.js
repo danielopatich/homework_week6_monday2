@@ -1,59 +1,52 @@
 // MODELS //
-var Post = Backbone.Model.extend({
+var Person = Backbone.Model.extend({
   urlRoot: 'http://tiny-starburst.herokuapp.com/collections/posts'
 });
 // END MODELS //
-// COLLECTIONS //
-var Posts = Backbone.Collection.extend({
-  url: 'http://tiny-starburst.herokuapp.com/collections/posts',
-  model: Post
-});
-// END COLLECTIONS //
 // VIEWS //
-var PostView = Backbone.View.extend({
-  tagName: 'section',
-  initialize: function(){
-    this.render();
-    console.log('Post Page Rendered.')
-  },
+var PersonView = Backbone.View.extend({
   events: {
-    'click .postButton': 'handlePostClick',
+    'click .submitButton': 'send',
   },
 
   send: function(event){
-    var name = this.$('.name').val();
-    var message = this.$('.message').val();
-    var post = new Post({
-      name: name,
-      message: message,
-    });
-    this.model.save(null, {
-      success: function() {
-      }
-    });
-    postsCollection.add(post);
+    var first = this.$('.first').val();
+    var last = this.$('.last').val();
+    var address = this.$('.address').val();
+    var phone = this.$('.phone').val();
+    var person = new Person();
+    if(first.trim() === ''){
+      alert('put some stuff in');
+      return;
+    }
+    if(last.trim() === ''){
+      alert('put some stuff in');
+      return;
+    }
+    if(address.trim() === ''){
+      alert('put some stuff in');
+      return;
+    }
+    if(phone.trim() === ''){
+      alert('put some stuff in');
+      return;
+    }
+    person.save();
+  },
+  handleSendClick: function(){
+    console.log('Submitted.')
+    event.preventDefault();
+    this.send();
   },
 
-  handleEnter: function(){
-    console.log('Submitted.')
-    event.preventDefault();
-  },
-  handlePostClick: function(){
-    console.log('Submitted.')
-    event.preventDefault();
-    if (event.keyCode === 13) {
-        this.send();
-    }
-  },
   render: function(){
-    var html = $('#inputBoxTemplate').html();
-    this.$el.html(html);
+    this.model.toJSON();
+    });
     return this;
-  },
+  }
 });
 
-var postStuff = new PostView();
-var postCollection = new Posts();
-postStuff.render();
-$('main').append(postStuff.el);
+var personStuff = new PersonView({
+personStuff.render();
+$('main').append(personStuff.el);
 // END VIEWS //
