@@ -21,10 +21,10 @@ var PostView = Backbone.View.extend({
   },
 
   send: function(event){
-    var name = this.$('.name').val();
+    var title = this.$('.title').val();
     var message = this.$('.message').val();
     var post = new Post({
-      name: name,
+      title: title,
       message: message,
     });
     this.model.save(null, {
